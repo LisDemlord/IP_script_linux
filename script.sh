@@ -142,10 +142,31 @@ echo -e "FINAL TABLE"
 iptables -L
 
 separator_line
-touch iptables_options.rules
-echo "THE SAVE FILE HAS BEEN CREATED: iptables_options.rules"
-iptables-save > iptables_options.rules
-echo -e "\nTHE RULES WAS SAVED"
+if test -e iptables_options.rules; then
+	valid_input=false
+	while [[ "$valid_input" == false ]]; do
+		read -rp "The rules file will be overwritten. Continue? (y/N): " confirm
+		case $confirm in
+			[yY])
+				iptables-save > iptables_options.rules
+				echo -e "\nTHE RULES WAS SAVED"
+				valid_input=true
+				;;
+			[nN])
+				echo -e "\nThe rules have been applied, but they will be lost when the system is restarted."
+				valid_input=true
+				;;
+			*)
+				echo "\nIncorrect input!"
+				;;
+		esac
+	done
+else
+	touch iptables_options.rules
+	echo "THE SAVE FILE HAS BEEN CREATED: iptables_options.rules"
+	iptables-save > iptables_options.rules
+	echo -e "\nTHE RULES WAS SAVED"
+fi
 separator_line
 
 separator_line
