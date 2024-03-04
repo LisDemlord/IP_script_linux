@@ -138,11 +138,11 @@ done
 separator_line
 
 separator_line
-echo -e "\nFINAL TABLE"
+echo -e "FINAL TABLE"
 iptables -L
 
 separator_line
 
-echo "COMPLETE!"
+echo -e "\nCOMPLETE!\n"
 
 start_end_line
