@@ -129,7 +129,7 @@ do
 	((COUNTER+=3))
 	
 	# Add iptables rule to allow traffic based on extracted information
-	iptables -A INPUT -p $PROTOCOL --dport $LOCAL_PORT -s $REMOTE_ADDRESS -d $LOCAL_ADDRESS -j ACCEPT
+	iptables -A INPUT -p "$PROTOCOL" --dport "$LOCAL_PORT" -s "$REMOTE_ADDRESS" -d "$LOCAL_ADDRESS" -j ACCEPT
 	
 	echo -e "\nTHE RULE HAS BEEN ADDED"
 	((NUM_CONNECT++))
@@ -140,6 +140,13 @@ separator_line
 separator_line
 echo -e "FINAL TABLE"
 iptables -L
+
+separator_line
+touch iptables_options.rules
+echo "THE SAVE FILE HAS BEEN CREATED: iptables_options.rules"
+iptables-save > iptables_options.rules
+echo -e "\nTHE RULES WAS SAVED"
+separator_line
 
 separator_line
 
